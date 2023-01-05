@@ -1,45 +1,57 @@
 ## git 유저 설정    
-#### 1) 현재 위치에서 local 저장소 생성    
+#### 1) 현재 위치에서 local 저장소 생성     
 
-```ruby
+
+```php
 $ git init
 ```
 
-#### 2) 깃환경에서사용자이름, 이메일 지정    
 
-```bash
+#### 2) 깃환경에서사용자이름, 이메일 지정     
+
+
+```sql
 $ git config --globla user.name "사용자명"
 
 $ git config --globla user.email "사용자이메일명"
 ```
 
-#### 3) 깃 상태 확인    
+
+#### 3) 깃 상태 확인      
+
 
 ```bash
 $ git status
 ```
-    
+
+      
 - - -
-    
+      
 ## git hub 원격 저장소  
 #### 1) 원경 저장소에 연결    
+
 
 ```bash
 $ git remote add origin [github 레포지 주소]
 $ git remote add origin [branch 이름]   #없으면 생성됨
 ```
+
    
 #### 2) 원격 저장소에 연결됐는지 확인    
+
 
 ```bash
 $ git remote -v
 ````
-    
+
+   
+   
 #### 3) local 저장소의 커밋을 <u>맨 처음</u> 원격 저장소에 업로드    
 
 ```ruby
 $ git push -u origin master
 ````
+
 
 #### 4) local 저장소의 커밋을 원격 저장소에 업로드 (push)    
 
