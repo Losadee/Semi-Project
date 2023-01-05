@@ -1,7 +1,7 @@
 ## git 유저 설정    
 #### 1) 현재 위치에서 local 저장소 생성    
 
-```git bash
+```git
 $ git init
 ```
 
@@ -21,7 +21,7 @@ $ git status
     
 - - -
     
-### git hub 원격 저장소  
+## git hub 원격 저장소  
 #### 1) 원경 저장소에 연결    
 
 ```git bash
@@ -69,7 +69,7 @@ $ git remote remove origin
     
 - - -
        
-### Merge   
+## Merge   
 - master 브랜치와 병합    
 
 ```git bash
