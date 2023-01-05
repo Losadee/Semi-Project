@@ -25,8 +25,7 @@ $ git config --globla user.email "사용자이메일명"
 ```ruby
 $ git status
 ```
-
-<br>    
+  
 
 - - -
 
@@ -93,7 +92,6 @@ $ git push origin [브랜치명]
 $ git remote remove origin
 ```
    
-<br>  
 
 - - -
 
@@ -128,8 +126,7 @@ branch2로 들어가 pull작업을 해준 후 merge 한다.
 ```ruby
 $ git merge --abort
 ```
-
-<br>  
+ 
 
 - - -
 
