@@ -6,7 +6,7 @@
 $ git init
 ```
 
-
+    
 #### 2) 깃환경에서사용자이름, 이메일 지정     
 
 
@@ -16,7 +16,7 @@ $ git config --globla user.name "사용자명"
 $ git config --globla user.email "사용자이메일명"
 ```
 
-
+    
 #### 3) 깃 상태 확인      
 
 
@@ -36,7 +36,7 @@ $ git remote add origin [github 레포지 주소]
 $ git remote add origin [branch 이름]   #없으면 생성됨
 ```
 
-   
+     
 #### 2) 원격 저장소에 연결됐는지 확인    
 
 
@@ -45,7 +45,7 @@ $ git remote -v
 ````
 
    
-   
+    <br>
 #### 3) local 저장소의 커밋을 <u>맨 처음</u> 원격 저장소에 업로드    
 
 ```ruby
