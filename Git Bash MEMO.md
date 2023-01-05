@@ -1,7 +1,7 @@
 ## git 유저 설정    
 #### 1) 현재 위치에서 local 저장소 생성    
 
-```bash
+```ruby
 $ git init
 ```
 
@@ -37,7 +37,7 @@ $ git remote -v
     
 #### 3) local 저장소의 커밋을 <u>맨 처음</u> 원격 저장소에 업로드    
 
-```bash
+```ruby
 $ git push -u origin master
 ````
 
