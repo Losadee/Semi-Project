@@ -181,7 +181,7 @@ public class ReviewDAO {
 			con = getConnection();
 
 			// 3단계: sql구문을 만들고 실행할 준비
-			String sql = "update board set readcount = readcount + 1 where num = ?";
+			String sql = "update rv_board set rv_view = rv_view + 1 where rv_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			// 4단계: 실행
@@ -194,6 +194,69 @@ public class ReviewDAO {
 			close();
 		}
 
-	} // updateReadcount()
+	} 
 	
+	public ReviewDTO getRvBoard(int num) {
+		// MemberDTO 변수 선언 (초기값은 null로 선언)
+		ReviewDTO dto = null;
+
+		try {
+			// 1,2 디비연결
+			con = getConnection();
+			// 3단계: sql구문을 만들고 실행할 준비
+			String sql = "select * from rv_board where rv_num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			// 4단계: sql구문 실행 , 실행결과 저장(select)
+			// ResultSet : sql구문 실행 결과를 저장하는 자바 내장객체
+			rs = pstmt.executeQuery();
+			// 5단계: 결과 있으면 => BoardDTO 객체생성
+			// => set메서드 호출 => DB에서 가져온 값 저장
+			if (rs.next()) {
+				// 결과 있으면 => num에 대한 글 있음
+				dto = new ReviewDTO();
+
+				dto.setRv_num(rs.getInt("rv_num"));
+				dto.setCus_id(rs.getString("cus_id"));
+				dto.setRv_title(rs.getString("rv_title"));
+				dto.setRv_content(rs.getString("rv_content"));
+				dto.setRv_date(rs.getTimestamp("rv_date"));
+				dto.setRv_rate(rs.getInt("rv_rate"));
+				dto.setRv_view(rs.getInt("rv_view"));
+				dto.setMenu_num(rs.getInt("menu_num"));
+			} 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return dto;
+	}
+	
+	public String findMenu(int menu_num) {
+		String menu_name = "";
+		try {
+			con = getConnection();
+			
+			// 
+			String sql = "select menu_name from menu where menu_num = ?;";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, menu_num);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()){
+				menu_name = rs.getString("menu_name");
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return menu_name;
+	}
 }

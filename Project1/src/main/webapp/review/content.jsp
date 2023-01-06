@@ -1,41 +1,55 @@
-<%@page import="com.itwillbs.board.db.BoardDTO"%>
-<%@page import="com.itwillbs.board.db.BoardDAO"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.itwillbs.review.db.ReviewDAO"%>
+<%@page import="com.itwillbs.review.db.ReviewDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>board/content.jsp</title>
+<title>review/content.jsp</title>
 </head>
 <body>
 	<%
-// 가져오기
-BoardDTO dto = (BoardDTO)request.getAttribute("dto");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	// 가져오기
+	ReviewDTO dto = (ReviewDTO) request.getAttribute("dto");
+
+	ReviewDAO dao = new ReviewDAO();
+	String menu = dao.findMenu(dto.getMenu_num());
+	System.out.println("menu = " + menu);
 	%>
 	<table border="1">
 		<tr>
 			<td>글번호</td>
-			<td><%=dto.getNum()%></td>
+			<td><%=dto.getRv_num()%></td>
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><%=dto.getName()%></td>
+			<td><%=dto.getCus_id()%></td>
 		</tr>
 		<tr>
 			<td>등록일</td>
-			<td><%=dto.getDate()%></td>
+			<td><%=dateFormat.format(dto.getRv_date())%></td>
+		</tr>
+		<tr>
+			<td>메뉴</td>
+			<td><%=menu%></td>
+		</tr>
+		<tr>
+			<td>별점</td>
+			<td><%=dto.getRv_rate()%></td>
 		</tr>
 		<tr>
 			<td>조회수</td>
-			<td><%=dto.getReadcount()%></td>
+			<td><%=dto.getRv_view()%></td>
 		</tr>
 		<tr>
-			<td>제목</td>
-			<td><%=dto.getSubject()%></td>
+			<td>글제목</td>
+			<td><%=dto.getRv_title()%></td>
 		</tr>
 		<tr>
-			<td>내용</td>
-			<td><%=dto.getContent()%></td>
+			<td>글내용</td>
+			<td><%=dto.getRv_content()%></td>
 		</tr>
 		<tr>
 			<td colspan="2">
@@ -43,13 +57,10 @@ BoardDTO dto = (BoardDTO)request.getAttribute("dto");
 				// 세션값 가져오기
 				String id = (String) session.getAttribute("id");
 				// 글쓴이와 로그인(세션값) 일치하면 => 글수정, 글삭제 버튼 보이기
-				if (dto.getName().equals(id)) {
-				%> 
-				<input type="button" value="글수정" onclick="location.href='./BoardUpdateForm.bo?num=<%=dto.getNum()%>'"> 
-				<input type="button" value="글삭제" onclick="location.href='./BoardDelete.bo?num=<%=dto.getNum()%>'"> 
-				<%
+				if (dto.getCus_id().equals(id)) {
+				%> <input type="button" value="글수정" onclick="location.href='./ReviewUpdateForm.rv?num=<%=dto.getRv_num()%>'"> <input type="button" value="글삭제" onclick="location.href='./ReviewDelete.rv?num=<%=dto.getRv_num()%>'"> <%
  }
- %> <input type="button" value="글목록" onclick="location.href='./BoardList.bo'">
+ %> <input type="button" value="글목록" onclick="location.href='./ReviewList.rv'">
 			</td>
 		</tr>
 	</table>

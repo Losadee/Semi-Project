@@ -22,7 +22,7 @@
 	<form action="./ReviewWritePro.rv" name="review" id="review" method="post">
 		<table border="1">
 			<tr>
-				<td>글쓴이</td>
+				<td>작성자</td>
 				<td><input type="text" name="id" value="<%=id %>" readonly></td>
 			</tr>
 			<tr>
