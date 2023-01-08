@@ -4,9 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <title>review/updateForm.jsp</title>
-<link href="./review/review.css" rel="stylesheet"/>
+<link href="./css/star.css" rel="stylesheet"/>
+
 </head>
 <body>
 	<%
@@ -15,22 +16,19 @@
 
 	// dto 값 가져오기
 	ReviewDTO dto = (ReviewDTO) request.getAttribute("dto");
-	ReviewDAO dao = new ReviewDAO();
-	String menu = dao.findMenu(dto.getMenu_num());
+	String menu = (String)request.getAttribute("menu");
 	%>
 	<script type="text/javascript" src="./script/jquery-3.6.3.js"></script>
 	<script type="text/javascript">
-
+	$(document).ready(function() {
 	
-	$("input:radio[name ='star']:input[value='<%=dto.getMenu_num() %>']").attr("checked", true);
+        $('input:radio[name="star"][value="<%=dto.getRv_star() %>"]').prop('checked', true);
 	
-
-
-
+	});
 	</script>
 	<h1>글수정</h1>
-	<form action="./ReviewUpdatePro.rv" method="post">
-		<input type="hidden" name="num" value=<%=dto.getRv_num()%>>
+	<form action="./ReviewUpdatePro.rv" method="post" name="review" id="review">
+		<input type="hidden" name="num" value=<%=dto.getRv_num() %>>
 		<table border="1">
 			<tr>
 				<td>작성자</td>
@@ -61,8 +59,8 @@
 			</tr>
 			<tr>
 				<td>글내용</td>
-				<!-- textarea는 value="" 동작하지 않음 -->
-				<td><textarea name="content" rows="10" cols="20"><%=dto.getRv_content()%></textarea></td>
+				<td><textarea class="col-auto form-control" name="content" id="reviewContents">
+						<%=dto.getRv_content() %></textarea></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="글수정"></td>

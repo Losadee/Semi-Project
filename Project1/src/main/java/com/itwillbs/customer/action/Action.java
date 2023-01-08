@@ -5,9 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface Action {
 	// 인터페이스 => 클래스 틀 : 처리작업하는 자바파일의 틀
-		// 인터페이스 상속받은 모든 자식클래스는 틀을 강제적으로 적용
-		// 강제적으로 오버라이딩
-		// 리턴할 때 ActionForward에 이동경로, 이동방식을 담아서 리턴
-		
-		public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	// 인터페이스 상속받은 모든 자식클래스는 틀을 강제적으로 적용
+	// 강제적으로 메서드 오버라이딩
+	// 리턴할때 ActionForward에 이동경로, 이동방식을 담아서 저장
+	
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	
+	
+	
+	
 }

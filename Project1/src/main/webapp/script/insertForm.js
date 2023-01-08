@@ -1,5 +1,4 @@
 
-
 var checkIdResult = false;
 var checkPassResult = false;
 var checkPass2Result = false;
@@ -10,7 +9,7 @@ var dupPhoneResult = false;
 // 아이디 검사
 function checkId() {
 	
-	var id = document.getElementById('joinid').value;
+	var id = document.getElementById('id').value;
 	var span = document.getElementById('checkIdResult');
 	
 	//아이디 (영문 또는 숫자 또는 영문+숫자, 4 ~ 8자리)
@@ -29,7 +28,7 @@ function checkId() {
 }
 // 아이디 필수
 function checkId2(){
-	var id = document.getElementById('joinid').value;
+	
 	var span = document.getElementById('checkIdResult');
 	// null 체크
 	if(id == ""){
@@ -42,7 +41,7 @@ function checkId2(){
 // 비밀번호 검사
 function checkPass() {
 	var pass = document.getElementById('pass').value;
-	var span = document.getElementById('checkRetypePassResult');
+	var span = document.getElementById('checkPassResult');
 	
 	//비밀번호 (영문+숫자, 6 ~ 12자)
 	var regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,12}$/;
@@ -62,7 +61,7 @@ function checkPass() {
 // 비밀번호 필수
 function checkPass2(){
 	var pass = document.getElementById('pass').value;
-	var span = document.getElementById('checkRetypePassResult');
+	var span = document.getElementById('checkPassResult');
 	// null 체크
 	if(pass == ""){
 		span.innerHTML = '비밀번호를 입력해 주세요.';
@@ -141,33 +140,32 @@ function checkPhone2(){
 	if(phone == ""){
 		span.innerHTML = '휴대폰 번호를 입력해 주세요.';
 		span.style.color = 'RED';
-	} else {
-		$('#btnPh').click(function(){
-			
-			$.ajax({
-				url:'./CustomerPhoneCheck.cu',
-				data: {'phone': $('#phone').val()},
-				success: function(rdata) {
-					
-					if(rdata == "true") {
-						$('.dupdiv').html("사용 가능합니다.").css('color', 'green');
-						dupPhoneResult = true;
-					} else {
-						$('.dupdiv').html("사용중인 번호입니다.").css('color', 'red');
-						dupPhoneResult = false;
-					}
-				}
-			});
-		});
 	}
 }
 
 //전화번호 중복 검사
 function chkPh() {
-	dupPhoneResult = false;
+	dupPhoneResult = true;
 }
 
+$(document).ready(function() {
 
+	$('#btnPh').click(function(){
+		$.ajax({
+			url:'./CustomerPhoneCheck.cu',
+			data: {'phone': $('#phone').val()},
+			success: function(rdata) {
+				if(rdata == "true") {
+					$('.dupdiv').html("사용 가능합니다.").css('color', 'green');
+				} else {
+					$('.dupdiv').html("사용중인 번호입니다.").css('color', 'red');
+				}
+			}
+		});
+	
+	});
+
+});
 
 // '-' 금지
 function replacePhone() {
@@ -211,10 +209,10 @@ function valid() {
 
 window.onload = function(){
 	
-	// btnEle = document.getElementById('reset');
-	// btnEle.addEventListener('click', reset);
+	btnEle = document.getElementById('reset');
+	btnEle.addEventListener('click', reset);
 
-	txtId = document.getElementById('joinid');
+	txtId = document.getElementById('id');
 	txtId.addEventListener('keyup', checkId);
 	txtId.addEventListener('blur', checkId2);
 	
@@ -237,7 +235,7 @@ window.onload = function(){
 	txtPhone.addEventListener("keydown", replacePhone);
 	
 	btnPh = document.getElementById("btnPh");
-	btnPh.addEventListener("keyup", chkPh);
+	btnPh.addEventListener("click", chkPh);
 }
 
 	

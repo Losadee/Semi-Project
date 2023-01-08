@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.itwillbs.review.db.ReviewDTO"%>
 <%@page import="java.util.List"%>
@@ -13,8 +14,8 @@
 <%
 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-List<ReviewDTO> reviewList 
-				= (List<ReviewDTO>)request.getAttribute("reviewList");
+List<Map<String, Object>> reviewList 
+				= (List<Map<String, Object>>)request.getAttribute("reviewList");
 int startPage 	= (Integer)request.getAttribute("startPage");
 int pageBlock 	= (Integer)request.getAttribute("pageBlock");
 int currentPage = (Integer)request.getAttribute("currentPage");
@@ -22,21 +23,24 @@ int endPage 	= (Integer)request.getAttribute("endPage");
 int pageCount 	= (Integer)request.getAttribute("pageCount");
 int count 		= (Integer)request.getAttribute("count");
 	%>
-	<a href="#">메인페이지</a>
-	<a href="#">리뷰 쓰기(주문목록 페이지로 이동)</a><br>
+	<a href="./MainPage.cu">메인페이지</a>
+	<a href="./MyOrderForm.rv">리뷰 쓰기(주문목록 페이지로 이동)</a><br>
 	전체 글의 개수 :
 	<%=count%>
 	<table border="1">
 		<tr>
 			<td>글번호</td>
-			<td>글쓴이</td>
-			<td>제목</td>
+			<td>작성자</td>
+			<td>글제목</td>
+			<td>메뉴</td>
+			<td>별점</td>
 			<td>등록일</td>
 			<td>조회수</td>
 		</tr>
 		<%
 		for (int i = 0; i < reviewList.size(); i++) {
-			ReviewDTO dto = reviewList.get(i);
+			ReviewDTO dto = (ReviewDTO)reviewList.get(i).get("dto");
+			String menu = (String)reviewList.get(i).get("menu");
 		%>
 		<tr>
 			<td><%=dto.getRv_num() %></td>
@@ -44,6 +48,15 @@ int count 		= (Integer)request.getAttribute("count");
 			<td><!-- 제목을 눌렀을 때 글 내용으로 가는 방법 구현 -->
 				<!-- get 방식으로 파라미터 num을 들고 다니며 넘겨줌 --> 
 				<a href="./ReviewContent.rv?num=<%=dto.getRv_num() %>"><%=dto.getRv_title() %></a>
+			</td>
+			<td><%=menu %></td>
+			<td><%
+			for(int j = 0; j < dto.getRv_star(); j++) {
+			%>
+			<img src="./img/starImg.png" alt="Star Image" width=20px height=20px>
+			<%
+			}
+			%>
 			</td>
 			<td><%=dateFormat.format(dto.getRv_date()) %></td>
 			<td><%=dto.getRv_view() %></td>

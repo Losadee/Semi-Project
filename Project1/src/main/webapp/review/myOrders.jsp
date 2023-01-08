@@ -21,7 +21,6 @@ OrdersDAO Odao = new OrdersDAO();
 String menu = Odao.findMenu(id);
 System.out.println("menu = " + menu);
 
-// 메뉴이름, 날짜 group by절로 가져오기..?
 %>
 
 <input type="text" name="menu" value="<%=menu %>" readonly>

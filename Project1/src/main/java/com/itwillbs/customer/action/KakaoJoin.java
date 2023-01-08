@@ -27,7 +27,7 @@ public class KakaoJoin implements Action {
 
 		CustomerDAO dao = new CustomerDAO();
 		
-//		dao.KinsertCustomer(dto);
+		dao.KinsertCustomer(dto);
 
 		ActionForward forward=new ActionForward();
 		forward.setPath("./CustomerLoginForm.cu");

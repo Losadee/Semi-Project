@@ -68,7 +68,21 @@ public class ReviewFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} 
+		} else if(strpath.equals("/ReviewUpdatePro.rv")) {	
+			action = new ReviewUpdatePro();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(strpath.equals("/ReviewDelete.rv")) {	
+			action = new ReviewDelete();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		// 이동 방법
 		if(forward != null) {

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>review/writeForm.jsp</title>
-<link href="./review/review.css" rel="stylesheet"/>
+<link href="./css/star.css" rel="stylesheet"/>
 </head>
 <body>
 	<%
@@ -51,11 +51,12 @@
 			</tr>
 			<tr>
 				<td>글내용</td>
-				<td><textarea class="col-auto form-control" type="text" name="content" id="reviewContents"
+				<td><textarea class="col-auto form-control" name="content" id="reviewContents"
 				  placeholder="메뉴에 대한 리뷰를 남겨주세요!"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="글쓰기"></td>
+				<td><input type="submit" value="글쓰기"></td>
+				<td><input type="button" value="리뷰 목록" onclick="location.href='./ReviewList.rv'"></td>
 			</tr>
 		</table>
 

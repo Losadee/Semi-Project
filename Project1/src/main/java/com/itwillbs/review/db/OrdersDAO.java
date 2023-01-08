@@ -44,7 +44,7 @@ public class OrdersDAO {
 			
 			// 
 			String sql = "select m.menu_name from orders o join menu m \r\n"
-					+ "on o.menu_num = m.menu_num where cus_id = ?;";
+					+ "on o.menu_num = m.menu_num where o.cus_id = ?;";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, cus_id);
 			

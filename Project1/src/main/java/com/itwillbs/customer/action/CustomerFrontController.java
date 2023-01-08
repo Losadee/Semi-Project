@@ -1,6 +1,7 @@
 package com.itwillbs.customer.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,127 +9,141 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//처리담당자(서블릿을 상속)
 public class CustomerFrontController extends HttpServlet {
-
+	//서블릿 파일이 동작할때 => 자동으로 메서드 호출 service()
+	//	                 doGet() doPost()
+	//웹서버에서 서블릿이 동작할때 자동으로 메서드 호출되면
+	//메서드 오버라이딩해서 재정의
+	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-// URI => 					  /Model2/joinForm.me
-		String requestURI = request.getRequestURI();			// String 타입으로 리턴
-		System.out.println("requestURI : " + requestURI);
-// 프로젝트 명(Context명) => 	  /Model2
-		String contextPath = request.getContextPath();
-		System.out.println("contextPath : " + contextPath);
-		System.out.println("contextPath 길이 : " + contextPath.length());
-// 뽑은 가상주소		  =>			 /insertForm.me
-		// 시작위치(contextPath길이)부터 끝까지 문자열을 잘라서 가져오기
-		String strpath = requestURI.substring(contextPath.length());
-		System.out.println("뽑은 주소 path : " + strpath);
-				
+		String requestURL=request.getRequestURL().toString();
+		String requestURI=request.getRequestURI();
+		String contextPath=request.getContextPath();
+		String strpath=requestURI.substring(contextPath.length());
 		
-		// 주소 비교
-		// ActionForward 클래스, Action 인터페이스 파일 만들기
-		ActionForward forward = null;
-		Action action = null;
+		ActionForward forward=null;
+		Action action=null;
 		
-		if(strpath.equals("/CustomerJoinForm.cu")) {	
+		if(strpath.equals("/MainPage.cu")) {
 			forward = new ActionForward();
-			forward.setPath("./customer/joinForm_css.jsp");
+			forward.setPath("./customer/mainpage.jsp");
 			forward.setRedirect(false);
-			
-		} else if(strpath.equals("/CustomerJoinPro.cu")) {
-			action = new CustomerJoinPro();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
-			
-		} else if(strpath.equals("/CustomerUserIdCheck.cu")) {
-				forward = new ActionForward();
-				forward.setPath("./customer/userIdCheck.jsp");
-				forward.setRedirect(false);
-				
+		
 		} else if(strpath.equals("/CustomerAgree.cu")) {
 			forward = new ActionForward();
 			forward.setPath("./customer/agree.jsp");
 			forward.setRedirect(false);
 		
+		} else if(strpath.equals("/CustomerJoinForm.cu")) {
+			forward = new ActionForward();
+			forward.setPath("./customer/loginTest.jsp");
+			forward.setRedirect(false);
+			
+		} else if(strpath.equals("/CustomerIdCheck.cu")) {
+			action=new CustomerIdCheck();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			
+		} else if(strpath.equals("/CustomerPhoneCheck.cu")) {
+			action=new CustomerPhoneCheck();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			
+		} else if(strpath.equals("/CustomerJoinPro.cu")) {
+			action=new CustomerJoinPro();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		
 		} else if(strpath.equals("/KakaoJoin.cu")) {
 			action=new KakaoJoin();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+						
 		} else if(strpath.equals("/CustomerLoginForm.cu")) {
 			forward = new ActionForward();
-			forward.setPath("./customer/loginForm.jsp");
+			forward.setPath("./customer/loginTest.jsp");
 			forward.setRedirect(false);
-			
-		} else if(strpath.equals("/CustomerLoginPro.cu")) {
-			action = new CustomerLoginPro();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
-		} else if(strpath.equals("/CustomerFinfId.me")) {
-			forward = new ActionForward();
-			forward.setPath("./customer/findIdForm.jsp");
-			forward.setRedirect(false);
-			
-		} else if(strpath.equals("/CustomerFindIdPro.me")) {
-			action = new CustomerFindIdPro();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if(strpath.equals("/CustomerFindPw.me")) {
-			forward = new ActionForward();
-			forward.setPath("./customer/findPwForm.jsp");
-			forward.setRedirect(false);
-			
-		} else if(strpath.equals("/customerFindPwPro.me")) {
-			action = new CustomerFindPwPro();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if(strpath.equals("/CustomerPhoneCheck.cu")) {
-			action = new CustomerPhoneCheck();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if(strpath.equals("/CustomerMain.cu")) {
-			forward = new ActionForward();
-			forward.setPath("./customer/main.jsp");
-			forward.setRedirect(false);
-		}
 		
-		// 이동 방법
-		if(forward != null) {
+		} else if(strpath.equals("/CustomerLoginPro.cu")) {
+			action=new CustomerLoginPro();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		
+		} else if(strpath.equals("/CustomerFindIdPw.cu")) {
+			forward = new ActionForward();
+			forward.setPath("./customer/findidpw.jsp");
+			forward.setRedirect(false);	
+		
+		} else if(strpath.equals("/CustomerFindIdPro.cu")) {
+			action = new CustomerFindIdPro();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			
+		} else if(strpath.equals("/CustomerFindPwPro.cu")) {
+			action = new CustomerFindPwPro();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			
+		} else if(strpath.equals("/CustomerMypage.cu")) {
+			forward = new ActionForward();
+			forward.setPath("./customer/mypage.jsp");
+			forward.setRedirect(false);
+			
+		} else if(strpath.equals("/CustomerLogout.cu")) {
+			action=new CustomerLogout();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			
+		} else if(strpath.equals("/CustomerInfo.cu")) {
+			action=new CustomerInfo();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			
+		} else if(strpath.equals("/CustomerUpdateForm.cu")) {
+			action=new CustomerUpdateForm();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			
+		} else if(strpath.equals("/CustomerUpdatePro.cu")) {
+			action=new CustomerUpdatePro();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			
+		} else if(strpath.equals("/CustomerDeleteForm.cu")) {
+			// ./customer/deleteForm.jsp	
+			forward = new ActionForward();
+			forward.setPath("./customer/deleteForm.jsp");
+			forward.setRedirect(false);
+		
+		} else if(strpath.equals("/CustomerDeletePro.cu")) {
+			action=new CustomerDeletePro();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+
+		} else if(strpath.equals("/CustomerList.cu")) {
+			action=new CustomerList();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		}
+			
+		// 이동(경로정보, 이동방식 담아서 오면 이동) ActionForward
+		if(forward !=null) {
 			if(forward.isRedirect()) {
-				// true : 주소 변경되면서 이동
+				// true -> sendRedirect() 방식
+				System.out.println("true:" + forward.getPath() + "sendRedirect()방식 이동");
 				response.sendRedirect(forward.getPath());
 			} else {
-				// false : 주소 변경 없이 이동
-				RequestDispatcher dis =  request.getRequestDispatcher(forward.getPath());
+				// false -> foward() 방식
+				System.out.println("false:" + forward.getPath() + "forward()방식 이동");
+				RequestDispatcher dis=request.getRequestDispatcher(forward.getPath());
 				dis.forward(request, response);
 			}
-		}
-	}
+		} 
+		
+} //doProcess() 메서드
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("CustomerFrontController doGet()");
+		// doProcess()호출
 		doProcess(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("CustomerFrontController doPost()");
 		doProcess(request, response);
 	}
+
 	
+	
+
 }

@@ -17,14 +17,15 @@ public class ReviewWritePro implements Action {
 		String cus_id = request.getParameter("id");
 		String rv_title = request.getParameter("subject");
 		String rv_content =request.getParameter("content");
-//		String rv_content =request.getParameter("content");
-		int rv_rate = Integer.parseInt(request.getParameter("star"));
+		int rv_star = Integer.parseInt(request.getParameter("star"));
 		String menu_name = request.getParameter("menu");
 		
 		ReviewDAO dao = new ReviewDAO();
-		// menu_name을 이용한 menu_num 가져오기
+		
+		// menu_name을 이용한 menu_num 가져오기 	
+		// TODO : menu_num 주문 목록에서 request로 담아오도록 수정할 것
 		int menu_num = dao.findMenuNum(menu_name);
-		System.out.println("menu_num : " + menu_num);
+//		System.out.println("menu_num : " + menu_num);
 		ReviewDTO dto = new ReviewDTO();
 		
 		dto.setCus_id(cus_id);
@@ -32,7 +33,7 @@ public class ReviewWritePro implements Action {
 		dto.setRv_content(rv_content);
 		// 현시스템 날짜시간
 		dto.setRv_date(new Timestamp(System.currentTimeMillis()));
-		dto.setRv_rate(rv_rate);
+		dto.setRv_star(rv_star);
 		//조회수 0 설정
 		dto.setRv_view(0);
 		// 글번호 num => BoardDAO에서 작업

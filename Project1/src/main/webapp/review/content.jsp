@@ -12,11 +12,8 @@
 	<%
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	// 가져오기
-	ReviewDTO dto = (ReviewDTO) request.getAttribute("dto");
-
-	ReviewDAO dao = new ReviewDAO();
-	String menu = dao.findMenu(dto.getMenu_num());
-	System.out.println("menu = " + menu);
+	ReviewDTO dto = (ReviewDTO)request.getAttribute("dto");
+	String menu = (String)request.getAttribute("menu");
 	%>
 	<table border="1">
 		<tr>
@@ -28,25 +25,32 @@
 			<td><%=dto.getCus_id()%></td>
 		</tr>
 		<tr>
-			<td>등록일</td>
-			<td><%=dateFormat.format(dto.getRv_date())%></td>
+			<td>글제목</td>
+			<td><%=dto.getRv_title()%></td>
 		</tr>
 		<tr>
 			<td>메뉴</td>
 			<td><%=menu%></td>
 		</tr>
 		<tr>
+			<td>등록일</td>
+			<td><%=dateFormat.format(dto.getRv_date())%></td>
+		</tr>
+		<tr>
 			<td>별점</td>
-			<td><%=dto.getRv_rate()%></td>
+			<td><%
+			for(int i = 0; i < dto.getRv_star(); i++) {
+			%>
+			<img src="./img/starImg.png" alt="Star Image" width=20px height=20px>
+			<%
+			}
+			%></td>
 		</tr>
 		<tr>
 			<td>조회수</td>
 			<td><%=dto.getRv_view()%></td>
 		</tr>
-		<tr>
-			<td>글제목</td>
-			<td><%=dto.getRv_title()%></td>
-		</tr>
+
 		<tr>
 			<td>글내용</td>
 			<td><%=dto.getRv_content()%></td>
@@ -58,9 +62,10 @@
 				String id = (String) session.getAttribute("id");
 				// 글쓴이와 로그인(세션값) 일치하면 => 글수정, 글삭제 버튼 보이기
 				if (dto.getCus_id().equals(id)) {
-				%> <input type="button" value="글수정" onclick="location.href='./ReviewUpdateForm.rv?num=<%=dto.getRv_num()%>'"> <input type="button" value="글삭제" onclick="location.href='./ReviewDelete.rv?num=<%=dto.getRv_num()%>'"> <%
- }
- %> <input type="button" value="글목록" onclick="location.href='./ReviewList.rv'">
+				%> <input type="button" value="글수정" onclick="location.href='./ReviewUpdateForm.rv?num=<%=dto.getRv_num()%>'">
+				 <input type="button" value="글삭제" onclick="location.href='./ReviewDelete.rv?num=<%=dto.getRv_num()%>'"> <%
+ }					
+ %> <input type="button" value="리뷰목록" onclick="location.href='./ReviewList.rv'">
 			</td>
 		</tr>
 	</table>

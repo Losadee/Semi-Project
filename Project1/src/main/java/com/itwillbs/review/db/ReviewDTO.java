@@ -8,7 +8,7 @@ public class ReviewDTO {
 	private String rv_title;
 	private String rv_content;
 	private Timestamp rv_date;
-	private int rv_rate;
+	private int rv_star;
 	private int rv_view;
 	private int menu_num;
 	
@@ -49,11 +49,11 @@ public class ReviewDTO {
 	public void setRv_date(Timestamp rv_date) {
 		this.rv_date = rv_date;
 	}
-	public int getRv_rate() {
-		return rv_rate;
+	public int getRv_star() {
+		return rv_star;
 	}
-	public void setRv_rate(int rv_rate) {
-		this.rv_rate = rv_rate;
+	public void setRv_star(int rv_star) {
+		this.rv_star = rv_star;
 	}
 	public int getRv_view() {
 		return rv_view;

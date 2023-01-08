@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -72,7 +74,7 @@ public class ReviewDAO {
 		System.out.println("ReviewDTO subject :"+dto.getRv_title());
 		System.out.println("ReviewDTO content :"+dto.getRv_content());
 		System.out.println("ReviewDTO date :"+dto.getRv_date());
-		System.out.println("ReviewDTO rate :"+dto.getRv_rate());
+		System.out.println("ReviewDTO rate :"+dto.getRv_star());
 		System.out.println("ReviewDTO readcount :"+dto.getRv_view());
 		
 		try {
@@ -97,7 +99,7 @@ public class ReviewDAO {
 			pstmt.setString(3, dto.getRv_title());
 			pstmt.setString(4, dto.getRv_content());
 			pstmt.setTimestamp(5, dto.getRv_date());
-			pstmt.setInt(6, dto.getRv_rate());
+			pstmt.setInt(6, dto.getRv_star());
 			pstmt.setInt(7, dto.getRv_view());
 			pstmt.setInt(8, dto.getMenu_num());
 			//4 sql구문 실행
@@ -109,23 +111,26 @@ public class ReviewDAO {
 		}
 	}
 	
-	public List<ReviewDTO> getReviewList(int startRow, int pageSize) {
-		List<ReviewDTO> reviewList = new ArrayList<>();
-
+	public List<Map<String, Object>> getReviewList(int startRow, int pageSize) {
+		List<Map<String, Object>> reviewList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> param = null;
+		
 		try {
 			// 1, 2 단계 DB연결
 			con = getConnection();
 			// 3단계 : sql구문
-			String sql = "select * from rv_board order by rv_num desc limit ?,?";
+			String sql = "select r.* , m.menu_name\r\n"
+						+ "from rv_board r\r\n"
+						+ "join menu m\r\n"
+						+ "on r.menu_num = m.menu_num\r\n"
+						+ "order by rv_num desc limit ?,?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow-1);
 			pstmt.setInt(2, pageSize);
-			// 4단계 : sql구문 실행 , 실행결과 저장(select)
-			// ResultSet : sql구문 실행 결과를 저장하는 자바 내장객체
+			
 			rs = pstmt.executeQuery();
-			// 5단계 : while 결과를 출력, 배열저장 (select)
-			// => BoardDTO
-			// => 글 하나를 배열 한 칸에 저장
+			
+			// 모든 Review데이터 저장
 			while (rs.next()) {
 				ReviewDTO dto = new ReviewDTO();
 				dto.setRv_num(rs.getInt("rv_num"));
@@ -133,22 +138,27 @@ public class ReviewDAO {
 				dto.setRv_title(rs.getString("rv_title"));
 				dto.setRv_content(rs.getString("rv_content"));
 				dto.setRv_date(rs.getTimestamp("rv_date"));
-				dto.setRv_rate(rs.getInt("rv_rate"));
+				dto.setRv_star(rs.getInt("rv_star"));
 				dto.setRv_view(rs.getInt("rv_view"));
 				dto.setMenu_num(rs.getInt("menu_num"));
-				// 한 사람의 데이터를 배열에 한 칸에 저장 => boardList
-				reviewList.add(dto);
+				
+				String menu = rs.getString("menu_name");
+				
+				param = new HashMap<String, Object>();
+				param.put("dto", dto);
+				param.put("menu", menu);
+				
+				reviewList.add(param);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			// 마무리
 			close();
 		}
 		return reviewList;
 	}
 	
-	public int getReviewCount() {
+	public int getRvBoardCount() {
 		int count = 0;
 		try {
 			// 1,2 디비연결
@@ -196,15 +206,19 @@ public class ReviewDAO {
 
 	} 
 	
-	public ReviewDTO getRvBoard(int num) {
-		// MemberDTO 변수 선언 (초기값은 null로 선언)
+	public Map<String, Object> getRvBoard(int num) {
 		ReviewDTO dto = null;
-
+		Map<String, Object> param = null;
+		
 		try {
 			// 1,2 디비연결
 			con = getConnection();
 			// 3단계: sql구문을 만들고 실행할 준비
-			String sql = "select * from rv_board where rv_num=?";
+			String sql = "select r.* , m.menu_name\r\n"
+					+ "from rv_board r  \r\n"
+					+ "join menu m  \r\n"
+					+ "on r.menu_num = m.menu_num\r\n"
+					+ "where r.rv_num = ? \r\n";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			// 4단계: sql구문 실행 , 실행결과 저장(select)
@@ -215,48 +229,70 @@ public class ReviewDAO {
 			if (rs.next()) {
 				// 결과 있으면 => num에 대한 글 있음
 				dto = new ReviewDTO();
-
+				
 				dto.setRv_num(rs.getInt("rv_num"));
 				dto.setCus_id(rs.getString("cus_id"));
 				dto.setRv_title(rs.getString("rv_title"));
 				dto.setRv_content(rs.getString("rv_content"));
 				dto.setRv_date(rs.getTimestamp("rv_date"));
-				dto.setRv_rate(rs.getInt("rv_rate"));
+				dto.setRv_star(rs.getInt("rv_star"));
 				dto.setRv_view(rs.getInt("rv_view"));
 				dto.setMenu_num(rs.getInt("menu_num"));
-			} 
+				
+				String menu = rs.getString("menu_name");
+				
+				param = new HashMap<String, Object>();
+				param.put("dto", dto);
+				param.put("menu", menu);
 
+			} 
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-
-		return dto;
+		
+		return param;
 	}
 	
-	public String findMenu(int menu_num) {
-		String menu_name = "";
-		try {
-			con = getConnection();
-			
-			// 
-			String sql = "select menu_name from menu where menu_num = ?;";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, menu_num);
-			
-			rs=pstmt.executeQuery();
-			
-			if(rs.next()){
-				menu_name = rs.getString("menu_name");
-			}
+	public void deleteBoard(int rv_num) {
 
-			
+		try {
+			//1,2 디비연결
+			con = getConnection();
+			//3 sql
+			String sql="delete from rv_board where rv_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, rv_num);
+			//4 실행
+			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}finally {
 			close();
 		}
-		return menu_name;
+	}
+	
+	public void updateRvBoard(ReviewDTO dto) {
+		try {
+			//1,2 디비연결
+			con = getConnection();
+			//3 sql
+			String sql="update rv_board set rv_title=?,rv_content=?,rv_star=? where rv_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, dto.getRv_title());
+			pstmt.setString(2, dto.getRv_content());
+			pstmt.setInt(3, dto.getRv_star());
+			pstmt.setInt(4, dto.getRv_num());
+			//4 실행
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
 	}
 }

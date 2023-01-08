@@ -1,6 +1,7 @@
 package com.itwillbs.customer.db;
 
 public class CustomerDTO {
+	
 	private String cus_id;
 	private String cus_pass;
 	private String cus_name;
@@ -37,8 +38,7 @@ public class CustomerDTO {
 	public void setCus_email(String cus_email) {
 		this.cus_email = cus_email;
 	}
+
 	
-	
-	
-	
+
 }

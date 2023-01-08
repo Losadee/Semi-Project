@@ -19,7 +19,7 @@ public class CustomerFindIdPro implements Action {
 		request.setAttribute("id", id);
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("./member/findIdPro.jsp");	
+		forward.setPath("./customer/findIdPro.jsp");	
 		forward.setRedirect(false);	
 		
 		return forward;

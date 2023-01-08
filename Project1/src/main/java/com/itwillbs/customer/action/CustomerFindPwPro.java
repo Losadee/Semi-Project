@@ -20,7 +20,7 @@ public class CustomerFindPwPro implements Action {
 		request.setAttribute("pass", pw);
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("./member/findPwPro.jsp");	
+		forward.setPath("./customer/findPwPro.jsp");	
 		forward.setRedirect(false);	
 		
 		return forward;

@@ -3,17 +3,17 @@
 
 <header>
     <!-- 헤더 전체 영역 -->
-  <div class="header_area">
+  <div class="header">
    <nav class="navbar">
       <!-- 로고 영역 시작 -->
-      <div class="logo_area"> <!-- 로고이미지 누르면 메인페이지 이동 -->
+      <div class="logo"> <!-- 로고이미지 누르면 메인페이지 이동 -->
         <a href="./MainPage.cu" >CAFE ONDA</a>
       </div>
       <!-- 로고 영역 끝 -->
       
       <!-- 상단 메뉴영역 시작 -->
       <div class="menu_area">
-          <ul class="menu_area_ul">
+          <ul>
               <li><a href="">ABOUT</a></li>
               <li><a href="">NOTICE</a></li>
               <li><a href="">MENU</a></li>

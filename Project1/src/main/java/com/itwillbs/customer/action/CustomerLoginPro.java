@@ -36,7 +36,7 @@ public class CustomerLoginPro implements Action {
 			
 			// 주소가 변경되면서 이동./main.me 이동
 			ActionForward forward=new ActionForward();
-			forward.setPath("./MyOrderForm.rv");
+			forward.setPath("./MainPage.cu");
 			forward.setRedirect(true);
 			
 			return forward;
