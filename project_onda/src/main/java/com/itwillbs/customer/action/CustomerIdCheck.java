@@ -14,7 +14,7 @@ public class CustomerIdCheck implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String cus_id = request.getParameter("cus_id");
-		// DB를 조회할 MyBatis
+		
 		CustomerDAO dao = new CustomerDAO();
 		CustomerDTO dto = dao.getCustomer(cus_id);
 		
