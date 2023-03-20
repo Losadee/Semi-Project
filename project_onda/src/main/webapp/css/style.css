@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.menu-list {
+	width: 735px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu {
+/* 	border: 1px solid red !important;	나중에 지울 것 */
+	width: 300px; height: 600px;
+	display: inline-block; 
+    text-align: center;
+    text-decoration:none;
+    color: black;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 30px;
+}
+
+.menu img {
+	width: 260px; height: 300px;
+}
+
+.menu-title {
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.menu-num {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.number{
+	border-top-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+	border-bottom-width: 0;
+}
+
+/* .cent { text-align: center; } */

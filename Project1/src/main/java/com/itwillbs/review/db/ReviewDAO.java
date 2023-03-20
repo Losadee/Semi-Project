@@ -70,13 +70,6 @@ public class ReviewDAO {
 	
 	public void insertReview(ReviewDTO dto) {
 		
-		System.out.println("ReviewDTO id :"+dto.getCus_id());
-		System.out.println("ReviewDTO subject :"+dto.getRv_title());
-		System.out.println("ReviewDTO content :"+dto.getRv_content());
-		System.out.println("ReviewDTO date :"+dto.getRv_date());
-		System.out.println("ReviewDTO rate :"+dto.getRv_star());
-		System.out.println("ReviewDTO readcount :"+dto.getRv_view());
-		
 		try {
 			//1,2 메서드호출
 			con=getConnection();
