@@ -14,7 +14,7 @@ public class CustomerPhoneCheck implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String cus_phone = request.getParameter("cus_phone");
-		// DB를 조회할 MyBatis
+		
 		CustomerDAO dao = new CustomerDAO();
 		CustomerDTO dto = dao.phoneCheck(cus_phone);
 		
